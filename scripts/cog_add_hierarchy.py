@@ -7,7 +7,7 @@ import sys, urllib2, csv
 def write(cogs, infile, outfile):
     if outfile: hout = open(outfile, 'w')
     else: hout = sys.stdout
-    hin = open(args.infile, 'r')
+    hin = open(infile, 'r')
     hincsv = csv.reader(hin, delimiter = '\t')
     houtcsv = csv.writer(hout, delimiter = '\t')
     for i,row in enumerate(hincsv):
