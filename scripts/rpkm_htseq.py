@@ -40,10 +40,8 @@ def write_rpkms(c,g,t,l):
     houtcsv = csv.writer(hout, delimiter = '\t')
     houtcsv.writerow(["Gene"]+sorted(c.keys()))
 
-    for gene in g:
+    for gene, geneLength in l.iteritems():
         out = [gene]
-        try: geneLength = l[gene]
-        except KeyError: break
         for f in sorted(c.keys()):
             totalNumReads = t[f]
             numReads = c[f][gene]
