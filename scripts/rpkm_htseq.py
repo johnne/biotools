@@ -35,7 +35,7 @@ def read_counts(files):
         hin.close()
     return [c,g,t]
 
-def write_rpkms(c,g,t,l):
+def write_rpkms(c,g,t,l, raw=False):
     hout = sys.stdout
     houtcsv = csv.writer(hout, delimiter = '\t')
     houtcsv.writerow(["Gene"]+sorted(c.keys()))
@@ -45,7 +45,10 @@ def write_rpkms(c,g,t,l):
         for f in sorted(c.keys()):
             totalNumReads = t[f]
             numReads = c[f][gene]
-            rpkm = float(numReads) / (float(geneLength)/1000 * totalNumReads/1000000)
+            if raw: rpkm = numReads
+            else: 
+                rpk = float(numReads) / (float(geneLength)/1000)
+                rpkm = rpk / (float(totalNumReads)/1000000)
             out.append(rpkm)
         houtcsv.writerow(out)
     hout.close()
@@ -58,6 +61,9 @@ def main():
             help="List of several count files to collate RPKMs for")
     parser.add_argument("-g", "--gff", type=str, required = True,
             help="GFF/GTF file used to define gene regions")
+    parser.add_argument("-r", "--raw", action="store_true",
+            help="Print raw read counts instead of computing RPKMs")
+
     args = parser.parse_args()
 
     if not args.countfile and not args.counts: 
@@ -70,7 +76,7 @@ def main():
     else: files = [x.replace("\n","") for x in open(args.counts).readlines()]
     [c,g,t] = read_counts(files)
 
-    write_rpkms(c,g,t,l)
+    write_rpkms(c,g,t,l, args.raw)
 
 if __name__ == '__main__':
     main()
