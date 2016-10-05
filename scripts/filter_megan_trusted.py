@@ -9,7 +9,7 @@ def main():
             help="List of trusted ORFs")
     parser.add_argument("-b", "--bed", required=True,
             help="BED file for assembly")
-    parser.add_argument("-m", "--megan_file", require=True,
+    parser.add_argument("-m", "--megan_file", required=True,
             helP="Megan taxid result file")
     args = parser.parse_args()
     
