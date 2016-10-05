@@ -25,7 +25,7 @@ def main():
     to_remove = list(set(orfs_contigs_with_trusted).intersection(notrust))
 
     megan_filtered = megan.drop(to_remove, errors="ignore")
-    megan_filtered.to_csv(sys.stdout)
+    megan_filtered.to_csv(sys.stdout, header=False)
 
 if __name__ == '__main__':
     main()
