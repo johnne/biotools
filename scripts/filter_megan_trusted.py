@@ -10,7 +10,7 @@ def main():
     parser.add_argument("-b", "--bed", required=True,
             help="BED file for assembly")
     parser.add_argument("-m", "--megan_file", required=True,
-            helP="Megan taxid result file")
+            help="Megan taxid result file")
     args = parser.parse_args()
     
     trusted = pd.read_csv(args.trusted, header=None)
