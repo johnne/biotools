@@ -22,8 +22,15 @@ def main():
     tags = [x.split("=")[-1].rstrip(";") for x in gff.Gene]
     gff["Gene"] = tags
 
+    ## Make cov table and contigs in the GFF match up
     cov = pd.read_csv(args.cov, header=0, sep="\t", index_col=0)
-    cov.rename(index = rename, inplace=True)
+    cov.rename(index = rename[1], inplace=True)
+
+    ## Transfer coverage info to locus tags
+    tmp = pd.merge(gff,cov,left_index=True, right_index=True)
+    gene_cov = tmp.loc[:,["Gene","Avg_fold"]]
+
+    gene_cov.to_csv(sys.stdout, sep="\t", index=False)
 
 if __name__ == '__main__':
     main()
