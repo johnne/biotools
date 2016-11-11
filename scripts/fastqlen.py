@@ -12,8 +12,8 @@ def main():
 
     l = []
     
-    if ".gz" in args.infile: fh = gz.open(infile, 'rt')
-    else: fh = open(infile, 'r')
+    if ".gz" in args.infile: fh = gz.open(args.infile, 'rt')
+    else: fh = open(args.infile, 'r')
 
     for record in parse(fh, 'fastq'): l.append(len(record.seq))
 
