@@ -8,6 +8,8 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-i", "--infile", required=True,
             help="Fastq file")
+    parser.add_argument("-m", "--maxseqs", required=False, type=int,
+            help="Maximum number of sequences to use for average length calculation (optional)")
     args = parser.parse_args()
 
     l = []
@@ -15,7 +17,9 @@ def main():
     if ".gz" in args.infile: fh = gz.open(args.infile, 'rt')
     else: fh = open(args.infile, 'r')
 
-    for record in parse(fh, 'fastq'): l.append(len(record.seq))
+    for i,record in enumerate(parse(fh, 'fastq'),start=1): 
+        l.append(len(record.seq))
+        if args.maxseqs and i>=args.maxseqs: break
 
     m = np.mean(l)
 
