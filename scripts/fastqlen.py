@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, gzip as gz, numpy as np
+import sys, gzip as gz, numpy as np, os
 from argparse import ArgumentParser
 from Bio.SeqIO import parse
 
@@ -22,8 +22,8 @@ def main():
         if args.maxseqs and i>=args.maxseqs: break
 
     m = np.mean(l)
-
-    print(args.infile+'\t'+str(np.round(m,2)))
+    name=os.path.basename(args.infile)
+    print(name+'\t'+str(np.round(m,2)))
 
 if __name__ == '__main__':
     main()
