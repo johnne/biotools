@@ -34,7 +34,7 @@ def main():
     ann = df.groupby("query_seq").first()
 
     fh = sys.stdout
-    ann.ix[:,[0,2]].to_csv(fh,sep="\t")
+    ann.loc[:,["hmm_accession","evalue","score"]].to_csv(fh,sep="\t")
 
 if __name__ == '__main__':
     main()
