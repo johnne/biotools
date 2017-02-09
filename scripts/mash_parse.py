@@ -33,6 +33,6 @@ def main():
         q_taxdf = pd.DataFrame(index=[q]*len(q_taxids),columns=["taxid"],data=q_taxids)
         parsed_df = pd.concat([parsed_df,q_taxdf])
 
-    parsed_df.to_csv(sys.stdout,sep="\t")
+    parsed_df.to_csv(sys.stdout,sep="\t", header=False)
 
 if __name__ == '__main__': main()
