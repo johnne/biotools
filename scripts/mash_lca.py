@@ -31,6 +31,7 @@ def assign_ancestors(taxids,ncbi_tree,ranks_df,val_cols):
         for ancestor in node.ancestors():
             try: rank = ranks_df['rank'].ix[int(ancestor.name)]
             except KeyError: continue
+            except TypeError: continue
             if rank in val_cols: data_row[rank] = ancestor.name
         ## Find and add the taxid itself to the data row
         try: taxid_rank = ranks_df['rank'].ix[int(taxid)]
