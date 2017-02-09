@@ -7,12 +7,14 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-i", "--infile", required=True,
             help="Mash tabular file from running 'mash dist'")
+    parser.add_argument("-e", "--evalue", default=1e-10,
+            help="Threshold e-value. Filter hits with e-value above this threshold. Defaults to 1e-10")
     
     args = parser.parse_args()
 
     df = pd.read_csv(args.infile, header=None, sep="\t", names=["subject","query","distance","pvalue","shared"])
     
-    df_filt = df.loc[df.pvalue<=1e-10]
+    df_filt = df.loc[df.pvalue<=args.evalue]
     df_filt.index = range(1,len(df_filt)+1)
     
     taxids = [x.split("-")[2] for x in df_filt.subject]
