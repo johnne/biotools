@@ -7,7 +7,7 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("-i", "--infile", required=True,
             help="Mash tabular file from running 'mash dist'")
-    parser.add_argument("-e", "--evalue", default=1e-10,
+    parser.add_argument("-e", "--evalue", default=1e-10, type=float,
             help="Threshold e-value. Filter hits with e-value above this threshold. Defaults to 1e-10")
     
     args = parser.parse_args()
