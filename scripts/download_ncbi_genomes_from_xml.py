@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import pandas as pd, sys
+import sys
 from argparse import ArgumentParser
 from collections import defaultdict
 from ftplib import FTP
