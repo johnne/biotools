@@ -38,3 +38,6 @@ def main():
 
     with open(args.infile) as fh:
         read_records_from_filehandle(fh)
+
+if __name__ == '__main__': 
+    main()
