@@ -6,7 +6,7 @@ from Bio.SeqIO import write as seqio_write
 from argparse import ArgumentParser
 import sys
 
-def write_seqs(records,f,outdir):
+def write_records(records,f,outdir):
     with open(outdir+"/"+f, "w") as output_handle:
         seqio_write(records, output_handle, "fasta")
 
