@@ -37,7 +37,7 @@ def main():
     args = parser.parse_args()
 
     with open(args.infile) as fh:
-        read_records_from_filehandle(fh)
+        read_records_from_filehandle(fh,args.outdir)
 
 if __name__ == '__main__': 
     main()
