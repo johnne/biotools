@@ -38,6 +38,7 @@ def read_records_from_filehandle(fh,outdir):
             records.append(record)
             taxid = thistaxid
             bioac = thisbioac
+    f = taxid+"."+bioac+".fasta"
     sys.stderr.write("Writing to "+outdir+"/"+f+"\n")
     write_records(records,f,outdir)
         
