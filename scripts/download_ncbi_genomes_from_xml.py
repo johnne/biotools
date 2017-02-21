@@ -39,6 +39,7 @@ def download(key,link,outdir):
     basename_dir = genome_dir.split("/")[-1]
     ftp.cwd(genome_dir)
     filename = basename_dir+"_genomic.fna.gz"
+    sys.stderr.write("Downloading "+filename+" from server. Storing as "+outdir+"/"+key+".fasta.gz\n")
     ftp.retrbinary('RETR '+filename, open(outdir+"/"+key+".fasta.gz", 'wb').write)
     ftp.quit()
     
@@ -57,7 +58,6 @@ def main():
     ## Download
     for key,link in result.items(): 
         #print(key,link[0],sep="\t")
-        sys.stderr.write("Downloading "+key+" from "+link[0]+"\n")
         download(key,link[0],args.outdir)
     
 if __name__ == '__main__':
