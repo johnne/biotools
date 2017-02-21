@@ -6,6 +6,13 @@ from Bio.SeqIO import write as seqio_write
 from argparse import ArgumentParser
 import sys
 
+def initialize(record):
+    records = []
+    if len(str(record.seq))>=100: records.append(record)
+    taxid=(record.id).split(".")[0]
+    bioac=(record.id).split(".")[1]
+    return [records,taxid,bioac]
+
 def write_records(records,f,outdir):
     with open(outdir+"/"+f, "w") as output_handle:
         seqio_write(records, output_handle, "fasta")
@@ -13,19 +20,24 @@ def write_records(records,f,outdir):
 def read_records_from_filehandle(fh,outdir):
     taxid = bioac = ""
     records = []
-    for record in parse(fh,"fasta"):
-        newtaxid=(record.id).split(".")[0]
-        newbioac=(record.id).split(".")[1]
-        if newtaxid!=taxid or newbioac!=bioac and len(records)>0:
+    for i,record in enumerate(parse(fh,"fasta")):
+        if i==0: 
+            [records,taxid,bioac] = initialize(record)
+            continue
+        thistaxid=(record.id).split(".")[0]
+        thisbioac=(record.id).split(".")[1]
+        if thistaxid!=taxid or thisbioac!=bioac:
             sys.stderr.write("Writing "+taxid+"."+bioac+" to "+outdir+"\n")
             write_records(records,taxid+"."+bioac+".fasta",outdir)
             records = []
-            taxid = newtaxid
-            bioac = newbioac
-
-        if len(str(record.seq))<100: continue
-        #records+=[">"+record.id,str(record.seq)]
-        records.append(record)
+            taxid = thistaxid
+            bioac = thisbioac
+        else:
+            if len(str(record.seq))<100: continue
+            #records+=[">"+record.id,str(record.seq)]
+            records.append(record)
+            taxid = thistaxid
+            bioac = thisbioac
         
 
 def main():
