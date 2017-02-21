@@ -27,17 +27,19 @@ def read_records_from_filehandle(fh,outdir):
         thistaxid=(record.id).split(".")[0]
         thisbioac=(record.id).split(".")[1]
         if thistaxid!=taxid or thisbioac!=bioac:
-            sys.stderr.write("Writing "+taxid+"."+bioac+" to "+outdir+"\n")
-            write_records(records,taxid+"."+bioac+".fasta",outdir)
+            f = taxid+"."+bioac+".fasta"
+            sys.stderr.write("Writing to "+outdir+"/"+f+"\n")
+            write_records(records,f,outdir)
             records = []
             taxid = thistaxid
             bioac = thisbioac
         else:
             if len(str(record.seq))<100: continue
-            #records+=[">"+record.id,str(record.seq)]
             records.append(record)
             taxid = thistaxid
             bioac = thisbioac
+    sys.stderr.write("Writing to "+outdir+"/"+f+"\n")
+    write_records(records,f,outdir)
         
 
 def main():
